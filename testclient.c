@@ -3,13 +3,14 @@
 #include<arpa/inet.h>	//inet_addr
 #include<string.h>
 #include<unistd.h>
+#include<time.h>
 
 int main(int argc , char *argv[]){
 while(1)
 {
 	int socket_desc;
 	struct sockaddr_in server; 
-        char message[2000], buffer[2000];
+        char message[2000], buffer[2000], response[30];
 	
 	//Create socket
 	socket_desc = socket(AF_INET , SOCK_STREAM , 0);
@@ -54,6 +55,9 @@ while(1)
 
 	recv(socket_desc, buffer, 2000, 0);
 	printf("Server : %s\n", buffer);
+//
+	recv(socket_desc, response, 29, 0);
+	printf("Time from server: %s", response);
 
 	close(socket_desc);
 	}
