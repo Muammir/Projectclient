@@ -10,7 +10,7 @@ int main(int argc , char *argv[]){
 //	char response[30];
 //while(1)
 //{
-	int socket_desc;
+	int socket_desc, n_server;
 	struct sockaddr_in server; 
         char message[2000], buffer[2000], response[30];
 while(1)
@@ -38,11 +38,17 @@ while(1)
 	fgets(message, 2000, stdin);
 	send(socket_desc, message, 2000, 0);
 
+	n_server++;
+	time_t currentTime;
+	time(&currentTime);
+	printf("Client %d Sent by %s", n_server, ctime(&currentTime));
+	send(socket_desc, ctime(&currentTime), 30, 0);
+
 	recv(socket_desc, buffer, 2000, 0);
-	printf("Server : %s\n", buffer);
+	printf("Server : %s", buffer);
 
 	recv(socket_desc, response, 29, 0);
-	printf("Time from server: %s", response);
+	printf("Received by: %s", response);
 	close(socket_desc);
 	}
 	return 0;
